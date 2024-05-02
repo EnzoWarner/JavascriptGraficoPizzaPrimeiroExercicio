@@ -3,8 +3,8 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 		<script>
             google.charts.load('current', {'packages':['corechart']});
-            google.charts.setOnLoadCallback(desenharPizza);
-            function desenharPizza (){
+            google.charts.setOnLoadCallback(desenharGrafricos);
+            function desenharGrafricos (){
                 var tabela = new google.visualization.DataTable();
                 tabela.addColumn('string','categorias');
                 tabela.addColumn('number','valores');
@@ -16,13 +16,53 @@
                     ['Cartão de crédito',900],
                     ['Alimentação',260]
                 ]);
+                var opcoes = {
+                    title:'Tipos de Gastos',
+                    height: 400,
+                    width: 800, // Desde do title até pieHole não necessita de aspas simples para funcionar
+                    is3D: true, // Grafico 3d 
+                   // 'pieHole': 0.4 = Grafico de Rosca
+                    legend: 'labeled',
+                    pieSliceText: 'value',
+                    //collors: ['grey', 'red', 'yellow', 'blue', 'pink', 'purple'],
+                    slices: {
+                        //0:{}, se voce não colocar o numero do array ou não colocar a cor dentro das chaves ele vai voltar para o padrão normal no index do array não especificado.
+                        1:{color: 'grey'}, 
+                        2:{color: '#a6a6a6'},
+                        3:{color: 'grey'},
+                        4:{offset: 0.4},
+                        5:{color: 'grey'}
+                    }
+                };
                 var grafico = new google.visualization.PieChart(document.getElementById('graficoPizza'));
+                grafico.draw(tabela, opcoes);
+
+                tabela = new google.visualization.DataTable();
+                tabela.addColumn('string', 'Mês');
+                tabela.addColumn('number', 'Gastos');
+                tabela.addRows([                
+                ['jan',800],
+                ['fev',400],
+                ['mar',1100],
+                ['abr',400],
+                ['mai',500],
+                ['jun',750],
+                ['jul',1100],
+                ['ago',650],
+                ['set',850],
+                ['out',400],
+                ['nov',1000],
+                ['dez',720]
+                ]);
+                var grafico = new google.visualization.LineChart(document.getElementById('graficoLinha'));
                 grafico.draw(tabela);
             }
-            google.charts.SetOnLoadCallback(desenharPizza);
+           // google.charts.SetOnLoadCallback(desenharGrafricos); na videos aula ele estava aqui mas no meu pc tive que colocar topo abaixo do outro google charts para rodar
+          //  <div id="graficoPizza" "width: 900px; height: 500px;"></div>
         </script>
 	</head>
 	<body>
-        <div id="graficoPizza" "width: 900px; height: 500px;"></div>
+        <div id="graficoPizza"></div>
+        <div id="graficoLinha"></div>
     </body>
 </html>
